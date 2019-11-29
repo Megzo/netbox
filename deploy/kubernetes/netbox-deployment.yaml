@@ -1,0 +1,216 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: netbox
+  name: netbox
+  namespace: netbox
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: netbox
+    spec:
+      containers:
+      - env:
+        - name: CORS_ORIGIN_ALLOW_ALL
+          valueFrom:
+            configMapKeyRef:
+              key: CORS_ORIGIN_ALLOW_ALL
+              name: netbox-env-netbox-env
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: netbox-env-netbox-env
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: netbox-env-netbox-env
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PASSWORD
+              name: netbox-env-netbox-env
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USER
+              name: netbox-env-netbox-env
+        - name: EMAIL_FROM
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_FROM
+              name: netbox-env-netbox-env
+        - name: EMAIL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_PASSWORD
+              name: netbox-env-netbox-env
+        - name: EMAIL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_PORT
+              name: netbox-env-netbox-env
+        - name: EMAIL_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_SERVER
+              name: netbox-env-netbox-env
+        - name: EMAIL_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_TIMEOUT
+              name: netbox-env-netbox-env
+        - name: EMAIL_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_USERNAME
+              name: netbox-env-netbox-env
+        - name: MAX_PAGE_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: MAX_PAGE_SIZE
+              name: netbox-env-netbox-env
+        - name: MEDIA_ROOT
+          valueFrom:
+            configMapKeyRef:
+              key: MEDIA_ROOT
+              name: netbox-env-netbox-env
+        - name: NAPALM_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: NAPALM_PASSWORD
+              name: netbox-env-netbox-env
+        - name: NAPALM_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              key: NAPALM_TIMEOUT
+              name: netbox-env-netbox-env
+        - name: NAPALM_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: NAPALM_USERNAME
+              name: netbox-env-netbox-env
+        - name: REDIS_CACHE_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_CACHE_DATABASE
+              name: netbox-env-netbox-env
+        - name: REDIS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_DATABASE
+              name: netbox-env-netbox-env
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: netbox-env-netbox-env
+        - name: REDIS_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PASSWORD
+              name: netbox-env-netbox-env
+        - name: REDIS_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SSL
+              name: netbox-env-netbox-env
+        - name: SECRET_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: SECRET_KEY
+              name: netbox-env-netbox-env
+        - name: SKIP_STARTUP_SCRIPTS
+          valueFrom:
+            configMapKeyRef:
+              key: SKIP_STARTUP_SCRIPTS
+              name: netbox-env-netbox-env
+        - name: SKIP_SUPERUSER
+          valueFrom:
+            configMapKeyRef:
+              key: SKIP_SUPERUSER
+              name: netbox-env-netbox-env
+        - name: SUPERUSER_API_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              key: SUPERUSER_API_TOKEN
+              name: netbox-env-netbox-env
+        - name: SUPERUSER_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              key: SUPERUSER_EMAIL
+              name: netbox-env-netbox-env
+        - name: SUPERUSER_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: SUPERUSER_NAME
+              name: netbox-env-netbox-env
+        - name: SUPERUSER_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: SUPERUSER_PASSWORD
+              name: netbox-env-netbox-env
+        - name: WEBHOOKS_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              key: WEBHOOKS_ENABLED
+              name: netbox-env-netbox-env
+        image: netboxcommunity/netbox:latest
+        name: netbox
+        volumeMounts:
+        - mountPath: /opt/netbox/startup_scripts
+          name: startup-scripts
+          readOnly: true
+        - mountPath: /opt/netbox/initializers
+          name: netbox-initializers
+          readOnly: true
+        - mountPath: /etc/netbox/config
+          name: netbox-config
+          readOnly: true
+        - mountPath: /etc/netbox/reports
+          name: netbox-reports
+          readOnly: true
+        - mountPath: /etc/netbox/scripts
+          name: netbox-scripts
+          readOnly: true
+        - mountPath: /etc/netbox-nginx
+          name: netbox-nginx-config
+        - mountPath: /opt/netbox/netbox/static
+          name: netbox-static-files
+        - mountPath: /opt/netbox/netbox/media
+          name: netbox-media-files
+      restartPolicy: Always
+      volumes:
+      - name: startup-scripts
+        persistentVolumeClaim:
+          claimName: startup-scripts
+          readOnly: true
+      - name: netbox-initializers
+        persistentVolumeClaim:
+          claimName: netbox-initializers
+          readOnly: true
+      - name: netbox-config
+        persistentVolumeClaim:
+          claimName: netbox-config
+          readOnly: true
+      - name: netbox-reports
+        persistentVolumeClaim:
+          claimName: netbox-reports
+          readOnly: true
+      - name: netbox-scripts
+        persistentVolumeClaim:
+          claimName: netbox-scripts
+          readOnly: true
+      - name: netbox-nginx-config
+        persistentVolumeClaim:
+          claimName: netbox-nginx-config
+      - name: netbox-static-files
+        persistentVolumeClaim:
+          claimName: netbox-static-files
+      - name: netbox-media-files
+        persistentVolumeClaim:
+          claimName: netbox-media-files

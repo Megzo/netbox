@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: redis
+  name: redis
+  namespace: netbox
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - redis-server --appendonly yes --requirepass $REDIS_PASSWORD
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PASSWORD
+              name: redis-env-redis-env
+        image: redis:4-alpine
+        name: redis
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: netbox-redis-data
+      restartPolicy: Always
+      volumes:
+      - name: netbox-redis-data
+        persistentVolumeClaim:
+          claimName: netbox-redis-data

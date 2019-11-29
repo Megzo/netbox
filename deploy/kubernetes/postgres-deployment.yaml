@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: netbox
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_DB
+              name: postgres-env
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_PASSWORD
+              name: postgres-env
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_USER
+              name: postgres-env
+        image: postgres:10.4-alpine
+        name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: netbox-postgres-data
+      restartPolicy: Always
+      volumes:
+      - name: netbox-postgres-data
+        persistentVolumeClaim:
+          claimName: netbox-postgres-data
+

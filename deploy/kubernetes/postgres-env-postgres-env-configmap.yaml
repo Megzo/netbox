@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-env
+  namespace: netbox
+data:
+  POSTGRES_DB: netbox
+  POSTGRES_PASSWORD: J5brHrAXFLQSif0K
+  POSTGRES_USER: netbox
