@@ -75,7 +75,7 @@ metadata:
   namespace: netbox
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   storageClassName: netbox-static-files
   capacity:
     storage: 100Mi
@@ -89,7 +89,7 @@ metadata:
   namespace: netbox
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   storageClassName: netbox-media-files
   capacity:
     storage: 100Mi
@@ -103,7 +103,7 @@ metadata:
   namespace: netbox
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   storageClassName: netbox-nginx-config
   capacity:
     storage: 100Mi
