@@ -26,6 +26,7 @@ spec:
               key: REDIS_PASSWORD
               name: redis-env-redis-env
         image: redis:4-alpine
+        imagePullPolicy: IfNotPresent
         name: redis
         resources: {}
         volumeMounts:

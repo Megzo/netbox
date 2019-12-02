@@ -32,6 +32,7 @@ spec:
               key: POSTGRES_USER
               name: postgres-env
         image: postgres:10.4-alpine
+        imagePullPolicy: IfNotPresent
         name: postgres
         volumeMounts:
         - mountPath: /var/lib/postgresql/data

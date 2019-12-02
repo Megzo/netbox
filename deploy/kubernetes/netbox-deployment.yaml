@@ -160,6 +160,7 @@ spec:
               key: WEBHOOKS_ENABLED
               name: netbox-env-netbox-env
         image: netboxcommunity/netbox:latest
+        imagePullPolicy: IfNotPresent
         name: netbox
         volumeMounts:
         - mountPath: /opt/netbox/startup_scripts
