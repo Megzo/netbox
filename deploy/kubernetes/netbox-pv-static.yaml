@@ -67,3 +67,45 @@ spec:
     storage: 100Mi
   hostPath:
     path: "/home/ubuntu/netbox-docker/scripts"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: netbox-static-files
+  namespace: netbox
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: netbox-static-files
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: "/home/ubuntu/netbox-docker/static-files"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: netbox-media-files
+  namespace: netbox
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: netbox-media-files
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: "/home/ubuntu/netbox-docker/media-files"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: netbox-nginx-config
+  namespace: netbox
+spec:
+  accessModes:
+  - ReadOnlyMany
+  storageClassName: netbox-nginx-config
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: "/home/ubuntu/netbox-docker/nginx-config"

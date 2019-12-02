@@ -7,7 +7,8 @@ metadata:
   namespace: netbox
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
+  storageClassName: netbox-static-files
   resources:
     requests:
       storage: 100Mi
