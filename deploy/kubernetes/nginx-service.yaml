@@ -7,11 +7,11 @@ metadata:
   namespace: netbox
 spec:
   ports:
-  - name: "TCP8080"
+  - name: "tcp8080"
     port: 8080
     protocol: TCP
     targetPort: 8080
-  - name: "TCP80"
+  - name: "tcp80"
     port: 80
     protocol: TCP
     targetPort: 8080
