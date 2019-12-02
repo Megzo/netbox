@@ -7,6 +7,9 @@ metadata:
   namespace: netbox
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: netbox-worker 
   template:
     metadata:
       labels:
