@@ -8,6 +8,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
+  storageClassName: netbox-nginx-config
   resources:
     requests:
       storage: 100Mi
